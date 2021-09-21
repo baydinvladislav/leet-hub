@@ -1,10 +1,11 @@
 class Solution:
     def numIdenticalPairs(self, nums: List[int]) -> int:
-        n = len(nums)
-        good_pairs = 0
-
-        for i in range(n):
-            for j in range(n):
-                if nums[i] == nums[j] and i < j:
-                    good_pairs += 1
-        return good_pairs
+        hash_map = {}
+        res = 0
+        for number in nums:
+            if number in hash_map:
+                res += hash_map[number]
+                hash_map[number] += 1
+            else:
+                hash_map[number] = 1
+        return res
