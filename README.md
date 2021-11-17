@@ -1,2 +1,2 @@
 # LeetHub
-Problems made by auto commit are stored here
+Problems made by auto commit from leetcode are stored here
