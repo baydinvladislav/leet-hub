@@ -2,12 +2,9 @@ class Solution:
     # Iterative
     def reverseList(self, head):
         prev = None
-        curr = head
-        
-        while curr:
-            next_tmp = curr.next
-            curr.next = prev
-            prev = curr
-            curr = next_tmp
-
+        while head:
+            next = head.next
+            head.next = prev
+            prev = head
+            head = next
         return prev
