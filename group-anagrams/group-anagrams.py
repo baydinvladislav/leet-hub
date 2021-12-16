@@ -1,7 +1,9 @@
 class Solution(object):
     def groupAnagrams(self, strs):
-        ans = collections.defaultdict(list)
+        char_map = collections.defaultdict(list)
         for word in strs:
-            ans[tuple(sorted(word))].append(word)
-        return ans.values()
+            sorted_chars = sorted(word)
+            key = tuple(sorted_chars)
+            char_map[key].append(word)
+        return char_map.values()
         
