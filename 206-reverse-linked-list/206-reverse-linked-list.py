@@ -1,11 +1,9 @@
 class Solution:
-    # Iterative
     def reverseList(self, head):
-        previous = None
-        current = head
-        while current:
-            temp_next = current.next
-            current.next = previous
-            previous = current
-            current = temp_next
-        return previous
+        if not head or not head.next:
+            return head
+
+        p = self.reverseList(head.next)
+        head.next.next = head
+        head.next = None
+        return p
