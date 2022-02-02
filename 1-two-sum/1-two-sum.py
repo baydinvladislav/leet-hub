@@ -6,10 +6,11 @@ class Solution:
         buffer = {}
         for i in range(len(nums)):
             buffer[nums[i]] = i
-        
+            
         for i in range(len(nums)):
             attempt = target - nums[i]
             if attempt in buffer and buffer[attempt] != i:
-                return [buffer[attempt], i]
+                return [i, buffer[attempt]]
         return [-1, -1]
-    
+            
+        
