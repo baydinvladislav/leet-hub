@@ -5,24 +5,24 @@
 #         self.left = left
 #         self.right = right
 class Solution(object):
-        def levelOrder(self, root):
-            if not root:
-                return []
-            
-            values = []
-            queue = deque()
-            queue.append(root)
-            while queue:
-                cur_level = []
-                for _ in range(len(queue)):
-                    node = queue.popleft()
-                    cur_level.append(node.val)
+    def levelOrder(self, root):
+        levels = []
+        if not root:
+            return levels
 
-                    if node.left:
-                        queue.append(node.left)
+        def helper(node, level):
+            # start the current level
+            if len(levels) == level:
+                levels.append([])
 
-                    if node.right:
-                        queue.append(node.right)
-                values.append(cur_level)
+            # append the current node value
+            levels[level].append(node.val)
 
-            return values
+            # process child nodes for the next level
+            if node.left:
+                helper(node.left, level + 1)
+            if node.right:
+                helper(node.right, level + 1)
+
+        helper(root, 0)
+        return levels
