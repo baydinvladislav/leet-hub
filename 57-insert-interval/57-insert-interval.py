@@ -1,26 +1,32 @@
 class Solution:
-    def insert(self, intervals: List[List[int]], newInterval: List[int]) -> List[List[int]]:
-        start, end = 0, 1
-        counter = 0
-        merged_arr = []
-
-        # add to result array all intervals that come before new interval
-        while counter < len(intervals) and intervals[counter][end] < newInterval[start]:
-            merged_arr.append(intervals[counter])
-            counter += 1
-
-        # merge overlapping intervals with new interval
-        while counter < len(intervals) and newInterval[end] >= intervals[counter][start]:
-            newInterval[start] = min(intervals[counter][start], newInterval[start])
-            newInterval[end] = max(intervals[counter][end], newInterval[end])
-            counter += 1
-
-        # insert merged new interval with all overlapping intervals
-        merged_arr.append(newInterval)
-
-        # insert other intervals into result array
-        while counter < len(intervals):
-            merged_arr.append(intervals[counter])
-            counter += 1
-
-        return merged_arr
+    def insert(self, intervals: 'List[Interval]', newInterval: 'Interval') -> 'List[Interval]':
+        # init data
+        new_start, new_end = newInterval
+        idx, n = 0, len(intervals)
+        output = []
+        
+        # add all intervals starting before newInterval
+        while idx < n and new_start > intervals[idx][0]:
+            output.append(intervals[idx])
+            idx += 1
+            
+        # add newInterval
+        # if there is no overlap, just add the interval
+        if not output or output[-1][1] < new_start:
+            output.append(newInterval)
+        # if there is an overlap, merge with the last interval
+        else:
+            output[-1][1] = max(output[-1][1], new_end)
+        
+        # add next intervals, merge with newInterval if needed
+        while idx < n:
+            interval = intervals[idx]
+            start, end = interval
+            idx += 1
+            # if there is no overlap, just add an interval
+            if output[-1][1] < start:
+                output.append(interval)
+            # if there is an overlap, merge with the last interval
+            else:
+                output[-1][1] = max(output[-1][1], end)
+        return output
