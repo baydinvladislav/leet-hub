@@ -1,23 +1,20 @@
+from heapq import *
+
+
+# two balanced heaps
 class MedianFinder:
     def __init__(self):
-        self.store = []
+        self.small = []  # the smaller half of the list, max heap (invert min-heap)
+        self.large = []  # the larger half of the list, min heap
 
     def addNum(self, num):
-        low = 0
-        high = len(self.store) - 1
-
-        while low <= high:
-            mid = (low + high) // 2
-            if self.store[mid] >= num:
-                high = mid - 1
-            else:
-                low = mid + 1
-
-        self.store.insert(low, num)
+        if len(self.small) == len(self.large):
+            heappush(self.large, -heappushpop(self.small, -num))
+        else:
+            heappush(self.small, -heappushpop(self.large, num))
 
     def findMedian(self):
-        if len(self.store) % 2 == 0:
-            temp = len(self.store) // 2
-            return (self.store[temp] + self.store[temp - 1]) / 2.0
+        if len(self.small) == len(self.large):
+            return float(self.large[0] - self.small[0]) / 2.0
         else:
-            return self.store[len(self.store) // 2]
+            return float(self.large[0])
