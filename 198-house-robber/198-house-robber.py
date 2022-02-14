@@ -1,15 +1,19 @@
 class Solution:
+
     def rob(self, nums: List[int]) -> int:
-        if len(nums) == 1: 
-            return nums[0]
-        
-        dp = [0] * len(nums)
-        
-        # Base cases
-        dp[0] = nums[0]
-        dp[1] = max(nums[0], nums[1])
-        
-        for i in range(2, len(nums)):
-            dp[i] = max(dp[i - 1], dp[i - 2] + nums[i]) # Recurrence relation
-        
-        return dp[-1]
+        # Special handling for empty case.
+        if not nums:
+            return 0
+
+        maxRobbedAmount = [None for _ in range(len(nums) + 1)]
+        N = len(nums)
+
+        # Base case initialization.
+        maxRobbedAmount[N], maxRobbedAmount[N - 1] = 0, nums[N - 1]
+
+        # DP table calculations.
+        for i in range(N - 2, -1, -1):
+            # Same as recursive solution.
+            maxRobbedAmount[i] = max(maxRobbedAmount[i + 1], maxRobbedAmount[i + 2] + nums[i])
+
+        return maxRobbedAmount[0]
