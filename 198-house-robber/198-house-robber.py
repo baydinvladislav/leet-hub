@@ -16,4 +16,4 @@ class Solution:
             # Same as recursive solution.
             maxRobbedAmount[i] = max(maxRobbedAmount[i + 1], maxRobbedAmount[i + 2] + nums[i])
 
-        return maxRobbedAmount[0]
+        return max(maxRobbedAmount)
