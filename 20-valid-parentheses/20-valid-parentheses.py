@@ -1,17 +1,16 @@
 class Solution:
     def isValid(self, s):
-        hash_map = {'(': ')', '[': ']', '{': '}',}
+        d = {'(' : ')', '{':'}', '[':']'}
         stack = deque()
         
         for char in s:
-            if char in hash_map:
+            if char in d:
                 stack.append(char)
             else:
                 if not stack:
                     return False
                 
-                last_el = stack.pop()
-                if hash_map[last_el] != char:
+                if d[stack.pop()] != char:
                     return False
+            
         return not stack
-                
