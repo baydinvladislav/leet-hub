@@ -3,11 +3,18 @@ class Solution:
         if len(s) != len(t):
             return False
         
-        dict_a, dict_b = {}, {}
-        for char in s:
-            dict_a[char] = dict_a.get(char, 0) + 1
+        s = list(s)
+        t = list(t)
         
-        for char in t:
-            dict_b[char] = dict_b.get(char, 0) + 1
+        s.sort()
+        t.sort()
+       
+        i, j = 0, 0 
+        while i != len(s):
+            if s[i] != t[j]:
+                return False
+            i += 1 
+            j += 1
+        return True
+            
         
-        return dict_a == dict_b
