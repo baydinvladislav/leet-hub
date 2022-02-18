@@ -1,5 +1,8 @@
 class Solution:
     def merge(self, intervals):
+        if len(intervals) < 2:
+            return intervals
+        
         merged_intervals = []
         intervals.sort(key=lambda x: x[0])
         
