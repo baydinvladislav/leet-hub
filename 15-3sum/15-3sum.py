@@ -1,38 +1,25 @@
 class Solution:
-    def threeSum(self, nums):
-        if len(nums) < 3:
-            return []
-        
-        if set(nums) == {0}:
-            return [[0,0,0]]
-        
-        
+    def threeSum(self, nums: List[int]) -> List[List[int]]:
+        res = []
         nums.sort()
-        triplets = []
-
         for i in range(len(nums)):
-            if nums[i - 1] == nums[i]:
-                continue
+            if nums[i] > 0:
+                break
+            if i == 0 or nums[i - 1] != nums[i]:
+                self.twoSumII(nums, i, res)
+        return res
 
-            self.search_pair(nums, triplets, left=i + 1, target_sum=-nums[i])
-        return triplets
-
-    def search_pair(self, arr, triplets, left, target_sum):
-        right = len(arr) - 1
+    def twoSumII(self, nums: List[int], i: int, res: List[List[int]]):
+        left, right = i + 1, len(nums) - 1
         while left < right:
-            current_sum = arr[left] + arr[right]
-            if current_sum == target_sum:
-                triplets.append([-target_sum, arr[left], arr[right]])
+            sum = nums[i] + nums[left] + nums[right]
+            if sum < 0:
+                left += 1
+            elif sum > 0:
+                right -= 1
+            else:
+                res.append([nums[i], nums[left], nums[right]])
                 left += 1
                 right -= 1
-                # skip duplicates
-                while left < right and arr[left] == arr[left - 1]:
+                while left < right and nums[left] == nums[left - 1]:
                     left += 1
-                while left < right and arr[right] == arr[right + 1]:
-                    right -= 1
-
-            elif current_sum < target_sum:
-                left += 1
-
-            elif current_sum > target_sum:
-                right -= 1
