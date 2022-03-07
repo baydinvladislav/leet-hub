@@ -1,12 +1,20 @@
 class Solution:
     def lengthOfLongestSubstring(self, s: str) -> int:
-        window_start, max_length, hash_map = 0, 0, dict()
+        ascii_array = [0] * 128
+        left = right = 0
 
-        for window_end in range(len(s)):
-            if s[window_end] in hash_map:
-                window_start = max(window_start, hash_map[s[window_end]] + 1)
+        result = 0
+        while right < len(s):
+            last_character = s[right]
+            index = ord(last_character)
+            ascii_array[index] += 1
 
-            hash_map[s[window_end]] = window_end
-            max_length = max(max_length, window_end - window_start + 1)
-            
-        return max_length
+            while ascii_array[ord(last_character)] > 1:
+                first_character = s[left]
+                index = ord(first_character)
+                ascii_array[index] -= 1
+                left += 1
+
+            result = max(result, right - left + 1)
+            right += 1
+        return result
