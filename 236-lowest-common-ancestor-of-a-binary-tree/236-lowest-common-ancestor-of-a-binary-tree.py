@@ -5,14 +5,7 @@ class Solution:
         self.ans = None
 
     def lowestCommonAncestor(self, root, p, q):
-        """
-        :type root: TreeNode
-        :type p: TreeNode
-        :type q: TreeNode
-        :rtype: TreeNode
-        """
         def recurse_tree(current_node):
-
             # If reached the end of a branch, return False.
             if not current_node:
                 return False
@@ -24,7 +17,7 @@ class Solution:
             right = recurse_tree(current_node.right)
 
             # If the current node is one of p or q
-            mid = current_node == p or current_node == q
+            mid = current_node.val == p.val or current_node.val == q.val
 
             # If any two of the three flags left, right or mid become True.
             if mid + left + right >= 2:
