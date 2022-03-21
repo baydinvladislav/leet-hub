@@ -2,13 +2,13 @@ class Solution:
     def merge(self, intervals):
         if len(intervals) < 2:
             return intervals
-        
-        merged_intervals = []    
+
+        merged_intervals = []
         intervals.sort(key=lambda x: x[0])
-        
+
         start, end = intervals[0][0], intervals[0][1]
         for i in range(1, len(intervals)):
-            if end >= intervals[i][0]:
+            if intervals[i][0] <= end:
                 end = max(end, intervals[i][1])
             else:
                 merged_intervals.append([start, end])
@@ -16,4 +16,3 @@ class Solution:
                 end = intervals[i][1]
         merged_intervals.append([start, end])
         return merged_intervals
-            
