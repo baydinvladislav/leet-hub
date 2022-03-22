@@ -4,13 +4,13 @@ class Solution:
         result = 0
         hash_map = {}
 
-        i = 0
-        for j in range(n):
-            cur_char = s[j]
+        window_start = 0
+        for window_end in range(n):
+            cur_char = s[window_end]
             if cur_char in hash_map:
-                i = max(hash_map[cur_char], i)
+                window_start = max(hash_map[cur_char], window_start)
 
-            result = max(result, j - i + 1)
-            hash_map[cur_char] = j + 1
+            result = max(result, window_end - window_start + 1)
+            hash_map[cur_char] = window_end + 1
 
         return result
