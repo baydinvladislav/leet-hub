@@ -1,7 +1,7 @@
 class Node:
-    def __init__(self, k, v):
-        self.key = k
-        self.val = v
+    def __init__(self, key, value):
+        self.key = key
+        self.value = value
         self.prev = None
         self.next = None
 
@@ -9,40 +9,43 @@ class Node:
 class LRUCache:
     def __init__(self, capacity):
         self.capacity = capacity
-        self.dic = dict()
-        self.head = Node(0, 0)
-        self.tail = Node(0, 0)
+        self.map = {}
+        self.head = Node('#', '#')
+        self.tail = Node('#', '#')
         self.head.next = self.tail
         self.tail.prev = self.head
 
+    # O(1)
     def get(self, key):
-        if key in self.dic:
-            n = self.dic[key]
-            self._remove(n)
-            self._add(n)
-            return n.val
+        if key in self.map:
+            node = self.map[key]
+            self._remove_from_llist(node)
+            self._add_to_llist(node)
+            return node.value
         return -1
 
+    # O(1)
     def put(self, key, value):
-        if key in self.dic:
-            self._remove(self.dic[key])
-        n = Node(key, value)
-        self._add(n)
-        self.dic[key] = n
-        if len(self.dic) > self.capacity:
-            n = self.head.next
-            self._remove(n)
-            del self.dic[n.key]
+        if key in self.map:
+            self._remove_from_llist(self.map[key])
 
-    def _remove(self, node):
-        p = node.prev
-        n = node.next
-        p.next = n
-        n.prev = p
+        node = Node(key, value)
+        self._add_to_llist(node)
+        self.map[key] = node
+        if len(self.map) > self.capacity:
+            node = self.head.next
+            self._remove_from_llist(node)
+            del self.map[node.key]
 
-    def _add(self, node):
+    def _add_to_llist(self, node):
         p = self.tail.prev
         p.next = node
         self.tail.prev = node
         node.prev = p
         node.next = self.tail
+
+    def _remove_from_llist(self, node):
+        prev = node.prev
+        next = node.next
+        prev.next = next
+        next.prev = prev
