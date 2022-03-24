@@ -45,4 +45,4 @@ class LRUCache:
     def _remove_node(self, node):
         prev_node = node.prev
         prev_node.next = node.next
-        node.next.prev = node.prev
+        node.next.prev = prev_node
