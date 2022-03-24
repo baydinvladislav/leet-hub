@@ -1,7 +1,7 @@
 class Solution:
     def busyStudent(self, startTime: List[int], endTime: List[int], queryTime: int) -> int:
-        pupils = 0
-        for i in range(len(endTime)):
+        students = 0
+        for i in range(len(startTime)):
             if startTime[i] <= queryTime <= endTime[i]:
-                pupils += 1
-        return pupils
+                students += 1
+        return students
