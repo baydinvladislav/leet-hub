@@ -1,26 +1,20 @@
 # Definition for a binary tree node.
-# class TreeNode(object):
+# class TreeNode:
 #     def __init__(self, val=0, left=None, right=None):
 #         self.val = val
 #         self.left = left
 #         self.right = right
-class Solution(object):
-        def isValidBST(self, root):
-            if not root:
+
+
+class Solution:
+    def isValidBST(self, root: TreeNode) -> bool:
+        def validate(node, low=-math.inf, high=math.inf):
+            if not node:
                 return True
 
-            queue = deque([(root, float('-inf'), float('inf'))])
-            while queue:
-                root, lower, upper = queue.popleft()
+            if node.val <= low or node.val >= high:
+                return False
 
-                if not root:
-                    continue
+            return validate(node.right, node.val, high) and validate(node.left, low, node.val)
 
-                val = root.val
-                if val <= lower or val >= upper:
-                    return False
-
-                queue.append((root.right, val, upper))
-                queue.append((root.left, lower, val))
-            return True
-
+        return validate(root)
