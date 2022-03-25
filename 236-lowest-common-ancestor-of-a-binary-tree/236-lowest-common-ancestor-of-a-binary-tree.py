@@ -4,25 +4,25 @@
 #         self.val = x
 #         self.left = None
 #         self.right = None
-
 class Solution:
     def __init__(self):
         self.result = None
         
-    def lowestCommonAncestor(self, root: 'TreeNode', p: 'TreeNode', q: 'TreeNode') -> 'TreeNode':
+    def lowestCommonAncestor(self, root: 'TreeNode', p: 'TreeNode', q: 'TreeNode') -> 'TreeNode':     
         def recursive(node):
             if not node:
                 return False
             
-            left_branch = recursive(node.left)
-            right_branch = recursive(node.right)
-            middle = node.val == p.val or node.val == q.val
+            left = recursive(node.left)
+            right = recursive(node.right)
+            mid = node.val == p.val or node.val == q.val
             
-            if left_branch + right_branch + middle >= 2:
+            if left + right + mid >= 2:
                 self.result = node
             
-            return left_branch or right_branch or middle
+            return left or right or mid
         
         recursive(root)
         return self.result
-    
+            
+            
