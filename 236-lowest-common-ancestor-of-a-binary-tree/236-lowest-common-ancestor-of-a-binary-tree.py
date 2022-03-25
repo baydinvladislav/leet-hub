@@ -1,27 +1,30 @@
-# Definition for a binary tree node.
-# class TreeNode:
-#     def __init__(self, x):
-#         self.val = x
-#         self.left = None
-#         self.right = None
-
 class Solution:
     def __init__(self):
-        self.result = None
-        
-    def lowestCommonAncestor(self, root: 'TreeNode', p: 'TreeNode', q: 'TreeNode') -> 'TreeNode':
-        def recursive(node):
-            if not node:
+        # Variable to store LCA node.
+        self.ans = None
+
+    def lowestCommonAncestor(self, root, p, q):
+        def recurse_tree(current_node):
+            # If reached the end of a branch, return False.
+            if not current_node:
                 return False
-            
-            left_branch = recursive(node.left)
-            right_branch = recursive(node.right)
-            middle = p.val == node.val or q.val == node.val
-            
-            if int(left_branch) + int(right_branch) + int(middle) >= 2:
-                self.result = node
-            
-            return left_branch or right_branch or middle
-            
-        recursive(root)
-        return self.result
+
+            # Left Recursion
+            left = recurse_tree(current_node.left)
+
+            # Right Recursion
+            right = recurse_tree(current_node.right)
+
+            # If the current node is one of p or q
+            mid = current_node.val == p.val or current_node.val == q.val
+
+            # If any two of the three flags left, right or mid become True.
+            if mid + left + right >= 2:
+                self.ans = current_node
+
+            # Return True if either of the three bool values is True.
+            return mid or left or right
+
+        # Traverse the tree
+        recurse_tree(root)
+        return self.ans
