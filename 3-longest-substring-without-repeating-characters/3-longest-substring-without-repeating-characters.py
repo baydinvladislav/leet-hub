@@ -1,13 +1,13 @@
 class Solution:
     def lengthOfLongestSubstring(self, s: str) -> int:
-        start = result = 0
         hash = {}
+        window_start = result = 0
         
-        for end in range(len(s)):
-            if s[end] in hash:
-                start = max(start, hash[s[end]])
+        for window_end in range(len(s)):
+            if s[window_end] in hash:
+                window_start = max(window_start, hash[s[window_end]])
             
-            result = max(result, end - start + 1)
-            hash[s[end]] = end + 1
+            result = max(result, window_end - window_start + 1)
+            hash[s[window_end]] = window_end + 1
             
         return result
