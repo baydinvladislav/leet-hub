@@ -1,16 +1,12 @@
 class Solution:
-    def lengthOfLongestSubstring(self, s: str) -> int:
-        arr = [0] *  128
-        start = end = result = 0
-        
-        while end < len(s):
-            arr[ord(s[end])] += 1
-            
-            while arr[ord(s[end])] > 1:
-                arr[ord(s[start])] -= 1
-                start += 1
-            
+    def lengthOfLongestSubstring(self, s: str) -> int:   
+        map = {}
+        start = 0
+        result = 0
+        for end in range(len(s)):
+            if s[end] in map:
+                start = max(start, map[s[end]])
             result = max(result, end - start + 1)
-            end += 1
-            
+            map[s[end]] = end + 1
         return result
+            
