@@ -1,21 +1,49 @@
 class Solution:
     def lengthOfLongestSubstring(self, s: str) -> int:
-        ascii_array = [0] * 128
-        window_start = window_end = 0
-        result = 0
-        while window_end < len(s):
-            last_symbol = s[window_end]
-            # The ord() function returns the number
-            # representing the unicode code of a specified character.
-            symbol_unicode = ord(last_symbol)
-            ascii_array[symbol_unicode] += 1
-
-            while ascii_array[ord(last_symbol)] > 1:
-                first_symbol = s[window_start]
-                symbol_unicode = ord(first_symbol)
-                ascii_array[symbol_unicode] -= 1
-                window_start += 1
-
-            result = max(result, window_end - window_start + 1)
-            window_end += 1
+        arr = [0] * 128
+        result = start = end = 0
+        
+        while end < len(s):
+            last_symbol = s[end]
+            index = ord(last_symbol)
+            arr[index] += 1
+            
+            while arr[ord(last_symbol)] > 1:
+                first_symbol = s[start]
+                index = ord(first_symbol)
+                arr[index] -= 1
+                start += 1
+                
+            result = max(result, end - start + 1)
+            end += 1
+            
         return result
+            
+    
+    
+    
+    
+    
+    
+    
+    
+    
+#     def lengthOfLongestSubstring(self, s: str) -> int:
+#         max_length = 0
+        
+#         for i in range(len(s)):
+#             for j in range(i, len(s)):
+#                 if self.checker(i, j, s):
+#                     length = j - i + 1
+#                     max_length = max(length, max_length)
+#         return max_length
+    
+#     def checker(self, start, end, s):
+#         arr = [0] * 128
+        
+#         for i in range(start, end + 1):
+#             arr[ord(s[i])] += 1
+#             if arr[ord(s[i])] > 1:
+#                 return False
+#         return True
+    
