@@ -19,10 +19,10 @@ class Solution:
 
             if window_end >= len(s1) - 1:
                 left_char = s2[window_start]
-                window_start += 1
                 if left_char in frequency_map:
                     if frequency_map[left_char] == 0:
                         matched -= 1
                     frequency_map[left_char] += 1
+                window_start += 1
 
         return False
