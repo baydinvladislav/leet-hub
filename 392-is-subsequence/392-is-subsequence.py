@@ -6,7 +6,8 @@ class Solution:
                 return True
             if right == len(t):
                 return False
-
+            
             if s[left] == t[right]:
                 left += 1
             right += 1
+
