@@ -7,11 +7,10 @@ class Solution:
         
         middle_line = (point_min_x[0] + point_max_x[0]) / 2
         
-        result = []
         for x, y in points:
             mirror_point = (2 * middle_line - x, y)
-            result.append(mirror_point in points)
-            
-        return all(result)
+            if mirror_point not in points:
+                return False
+        return True
             
             
