@@ -1,19 +1,18 @@
 class Solution:
-    def maxDistToClosest(self, seats: List[int]) -> int:
-        n = len(seats)
-        empty, result, idx1, idx2 = 0, 0, -1, -1
+    def maxDistToClosest(self, seats):
+        people = (i for i, seat in enumerate(seats) if seat == 1)
+        prev, future = None, next(people)
 
-        for i in range(n):
-            if seats[i] == 1:
-                empty = 0
-
-                if idx1 == -1:
-                    idx1 = i
-                idx2 = i
-
+        ans = 0
+        for i, seat in enumerate(seats):
+            if seat:
+                prev = i
             else:
-                empty += 1
-                result = max(result, (empty + 1) // 2)
+                while future is not None and future < i:
+                    future = next(people, None)
 
-        result = max(result, idx1, n - 1 - idx2)
-        return result
+                left = float('inf') if prev is None else i - prev
+                right = float('inf') if future is None else future - i
+                ans = max(ans, min(left, right))
+
+        return ans
