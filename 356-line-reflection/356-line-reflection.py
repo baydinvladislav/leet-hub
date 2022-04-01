@@ -8,7 +8,6 @@ class Solution:
         result = []
         for x, y in points:
             point = (2 * rx - x, y)
-            is_occurrencied = point in points
-            result.append(is_occurrencied)
+            result.append(point in points)
 
         return all(result)
