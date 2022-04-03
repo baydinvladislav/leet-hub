@@ -16,12 +16,12 @@ class MaxStack:
         return max(self.stack)
 
     def popMax(self) -> int:
-        val = self.peekMax()
+        value = self.peekMax()
         for i in range(-1, -len(self.stack) - 1, -1):
-            if self.stack[i] == val:
+            if self.stack[i] == value:
                 del self.stack[i]
                 break
-        return val
+        return value
 
 
 # Your MaxStack object will be instantiated and called as such:
