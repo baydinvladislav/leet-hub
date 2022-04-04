@@ -1,42 +1,36 @@
-from random import choice
+class RandomizedSet:
 
-
-class RandomizedSet():
     def __init__(self):
-        """
-        Initialize your data structure here.
-        """
-        self.dict = {}
-        self.list = []
+        self.hashmap = {} 
+        self.array = []
 
-        
     def insert(self, val: int) -> bool:
-        """
-        Inserts a value to the set. Returns true if the set did not already contain the specified element.
-        """
-        if val in self.dict:
-            return False
-        self.dict[val] = len(self.list)
-        self.list.append(val)
-        return True
+        if val not in self.hashmap:
+            self.hashmap[val] = len(self.array)
+            self.array.append(val)
+            return True
+        
+        return False
         
 
     def remove(self, val: int) -> bool:
-        """
-        Removes a value from the set. Returns true if the set contained the specified element.
-        """
-        if val in self.dict:
-            # move the last element to the place idx of the element to delete
-            last_element, idx = self.list[-1], self.dict[val]
-            self.list[idx], self.dict[last_element] = last_element, idx
-            # delete the last element
-            self.list.pop()
-            del self.dict[val]
+        if val in self.hashmap:
+            idx = self.hashmap[val]
+            last_value = self.array[-1]
+            self.array[idx] = last_value
+            self.array.pop()
+            self.hashmap[last_value] = idx
+            del self.hashmap[val]
             return True
+        
         return False
 
     def getRandom(self) -> int:
-        """
-        Get a random element from the set.
-        """
-        return choice(self.list)
+        return random.choice(self.array)
+
+
+# Your RandomizedSet object will be instantiated and called as such:
+# obj = RandomizedSet()
+# param_1 = obj.insert(val)
+# param_2 = obj.remove(val)
+# param_3 = obj.getRandom()
