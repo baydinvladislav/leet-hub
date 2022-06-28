@@ -1,36 +1,30 @@
 class Solution:
     def exist(self, board: List[List[str]], word: str) -> bool:
-        
-        M = len(board)
-        N = len(board[0])
-        W = len(word)
-        
-        def dfs(i, j, w):
-            if w == W:
+        def dfs(x, y, index):
+            if index == len(word):
                 return True
             
-            if (not 0 <= i < M or
-                not 0 <= j < N or
-                board[i][j] == '#' or
-                board[i][j] != word[w]):
+            if (not 0 <= x < len(board) or 
+                not 0 <= y < len(board[0]) or 
+                board[x][y] == '#' or 
+                board[x][y] != word[index]):
                 return False
             
-            curr_letter = board[i][j]
-            board[i][j] = '#'
+            curr_letter = board[x][y]
+            board[x][y] = '#'
             
-            top = dfs(i - 1, j, w + 1)
-            bottom = dfs(i + 1, j, w + 1)
-            left = dfs(i, j - 1, w + 1)
-            right = dfs(i, j + 1, w + 1)
+            top = dfs(x - 1, y, index + 1)
+            bottom = dfs(x + 1, y, index + 1)
+            left = dfs(x, y - 1, index + 1)
+            right = dfs(x, y + 1, index + 1)
             
-            board[i][j] = curr_letter
+            board[x][y] = curr_letter
             
             return top or bottom or left or right
-        
-        
-        for i in range(M):
-            for j in range(N):
+    
+        for i in range(len(board)):
+            for j in range(len(board[0])):
                 if dfs(i, j, 0):
                     return True
-        
+
         return False
